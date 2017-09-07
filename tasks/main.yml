@@ -1,0 +1,24 @@
+---
+- name: create wheel directory
+  tempfile:
+    state: directory
+  register: temp_dir
+
+- name: unarchive tar file
+  unarchive:
+    src: junos_python_files.tar.gz
+    dest: "{{temp_dir.path}}"
+
+- name: copy pip files
+  pip:
+    name: "{{ item }}"
+    extra_args: "--use-wheel --no-index --find-links={{ temp_dir.path }}"
+  with_items:
+    - ncclient
+    - ipaddress
+    - lxml
+    - junos_eznc
+    - jmespath
+
+- name: delete temp dir
+  file: path="{{ temp_dir.path }}" state=absent
