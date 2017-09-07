@@ -21,14 +21,14 @@ None
 
 Example Playbook
 ----------------
-
+```
 - hosts: junos_devices
   connection: local
   roles:
     - junos_requirements
     - system
     - interface
-
+```
 
 License
 -------
